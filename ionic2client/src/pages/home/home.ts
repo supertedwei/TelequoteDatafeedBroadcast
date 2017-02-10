@@ -17,6 +17,12 @@ export class HomePage {
     this.socket.on('connect', () => {
       console.log("on connect")
     });
+    this.socket.on('event', function(data){
+        console.log("on event");
+    });
+    this.socket.on('disconnect', function(){
+        console.log("on disconnect");
+    });
   }
   
 
