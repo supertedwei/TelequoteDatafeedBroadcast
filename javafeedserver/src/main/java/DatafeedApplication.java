@@ -56,13 +56,15 @@ public class DatafeedApplication {
         ***********************************************************************/
         if (!counterlist.counters.isEmpty()) {
          
-           DatafeedServer feedserver = new DatafeedServer(4200);                            
+           DatafeedServer feedserver = new DatafeedServer(4200);
+           PushServer pushServer = new PushServer(9202);
+           pushServer.start();
 
               if (feedserver.listen()) {                 
                   while (true) {
                     DatafeedThread datafeedthread;                    
                     try {
-                        datafeedthread = new DatafeedThread(feedserver.getServer().accept(), counterlist);
+                        datafeedthread = new DatafeedThread(feedserver.getServer().accept(), counterlist, pushServer);
                         new Thread(datafeedthread).start();
                     } catch (IOException e) {
                         System.err.println(e);

@@ -13,13 +13,14 @@ import java.net.*;
 public class DatafeedThread implements Runnable {
     private Socket client;
     private CounterList counterlist;
+    private PushServer pushServer;
     
-    DatafeedThread (Socket client, CounterList counterlist) {
+    DatafeedThread (Socket client, CounterList counterlist, PushServer pushServer) {
         this.client = client;
         this.counterlist = counterlist;
+        this.pushServer = pushServer;
     }
 
-    @Override
     public void run() {
         
         BufferedReader in = null;
@@ -31,7 +32,10 @@ public class DatafeedThread implements Runnable {
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             while ((line = in.readLine()) != null)
             {
-             this.counterlist.parse(line);
+                Counter counter = this.counterlist.parse(line);
+                if (counter != null) {
+                    this.pushServer.push(counter);
+                }
             }
             in.close();
         } catch (IOException ex) {
