@@ -18,7 +18,10 @@ public class PushServer {
 
     public void start() {
         Configuration config = new Configuration();
-        config.setHostname("localhost");
+//        config.setHostname("mobile.img-fx.com");
+//        config.setHostname("58.185.12.149");
+//        config.setHostname("192.168.1.103");
+//        config.setHostname("0.0.0.0");
         config.setPort(this.port);
 
         server = new SocketIOServer(config);

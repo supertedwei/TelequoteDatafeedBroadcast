@@ -1,5 +1,8 @@
 
-var socket = require('socket.io-client')('http://localhost:3300');
+var socket = require('socket.io-client')('http://mobile.img-fx.com:3300');
+// var socket = require('socket.io-client')('http://58.185.12.149:3300');
+//var socket = require('socket.io-client')('http://localhost:3300');
+// var socket = require('socket.io-client')('http://192.168.1.103:3300');
 socket.on('connect', function(){
     console.log("on connect");
     socket.emit('new message', "Hello World!");
