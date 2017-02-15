@@ -10,7 +10,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="feedserver_main" />
-    <orderEntry type="library" name="Gradle: mysql:mysql-connector-java:6.0.5" level="project" />
+    <orderEntry type="library" name="Gradle: mysql:mysql-connector-java:5.1.23" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="feedserver_main" />
 </module>
