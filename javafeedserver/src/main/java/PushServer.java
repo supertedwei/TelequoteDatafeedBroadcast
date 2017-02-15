@@ -22,21 +22,14 @@ public class PushServer {
         config.setPort(this.port);
 
         server = new SocketIOServer(config);
-        server.addEventListener("event", Message.class, new DataListener<Message>() {
-            public void onData(SocketIOClient client, Message data, AckRequest ackRequest) {
-                // broadcast messages to all clients
-                server.getBroadcastOperations().sendEvent("event", data);
-            }
-        });
 
         server.start();
+
+        System.out.println("\n[PushServer] Push Server instance started on port : " + this.port);
     }
 
-    public void push(Counter counter) {
-        server.getBroadcastOperations().sendEvent("conter", counter);
+    public void push(PushCounter counter) {
+        server.getBroadcastOperations().sendEvent("counter", counter);
     }
 
-    public static class Message {
-
-    }
 }

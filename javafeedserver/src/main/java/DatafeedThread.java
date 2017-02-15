@@ -34,7 +34,7 @@ public class DatafeedThread implements Runnable {
             {
                 Counter counter = this.counterlist.parse(line);
                 if (counter != null) {
-                    this.pushServer.push(counter);
+                    this.pushServer.push(new PushCounter(counter));
                 }
             }
             in.close();
