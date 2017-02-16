@@ -1,19 +1,28 @@
 
-var server = require('http').createServer();
-var io = require('socket.io')(server);
+var config = require('./config');
+
+// Push Server
+var pushServer = require('http').createServer();
+var io = require('socket.io')(pushServer);
 io.on('connection', function(client){
-    console.log("on connection : " + client);
-    client.on('new message', function(data){
-        console.log("on new message : " + data);
-        client.broadcast.emit("new broadcast data", data);
-        io.sockets.emit("event", data);
-    });
-    client.on('event', function(data){
-        console.log("on event : " + data);
-    });
+    console.log("[pushServer] on connection : " + client);
     client.on('disconnect', function(){
         console.log("on disconnect");
     });
 });
+pushServer.listen(config.pushServer.port);
+console.log("Push Server started at port : " + config.pushServer.port);
 
-server.listen(3000);
+
+// Datafeed Client
+var socket = require('socket.io-client')(config.datafeedServer.url);
+socket.on('connect', function(){
+    console.log("on connect");
+});
+socket.on('counter', function(data){
+    console.log("on counter : " + JSON.stringify(data));
+    io.sockets.emit("counter", data);
+});
+socket.on('disconnect', function(){
+    console.log("on disconnect");
+});
