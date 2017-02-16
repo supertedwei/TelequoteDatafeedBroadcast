@@ -57,7 +57,7 @@ public class DatafeedApplication {
         if (!counterlist.counters.isEmpty()) {
          
            DatafeedServer feedserver = new DatafeedServer(4200);
-           PushServer pushServer = new PushServer(3300);
+           PushServer pushServer = new PushServer(3200);
            pushServer.start();
 
               if (feedserver.listen()) {                 
