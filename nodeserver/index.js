@@ -2,6 +2,8 @@
 var config = require('./config');
 var auth = require('./auth');
 
+auth.resetOnlinestatus();
+
 // Push Server
 var pushServer = require('http').createServer();
 var io = require('socket.io')(pushServer);
@@ -29,6 +31,10 @@ function postAuthenticate(socket, data) {
 
 function disconnect(socket) {
   console.log(socket.id + ' disconnected');
+  if (socket.username != null) {
+      console.log('Disconnect user : ' + socket.username);
+      auth.setOffline(socket.username);
+  }
 }
 
 

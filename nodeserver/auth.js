@@ -1,5 +1,23 @@
 var Model = require('./model');
 
+var setOnline = function(username) {
+    new Model.Account({username: username})
+        .save({onlinestatus: "online"}, {patch: true});
+}
+
+var setOffline = function(username) {
+    new Model.Account({username: username})
+        .save({onlinestatus: "offline"}, {patch: true});
+}
+
+var resetOnlinestatus = function() {
+    new Model.Account().where({onlinestatus: "online"})
+        .save({onlinestatus: "offline"}, {patch: true})
+        .catch(function(e) {
+            console.log("no online rows to update");
+        });
+}
+
 var authenticate = function (socket, data, callback) {
     var username = data.username;
     var password = data.password;
@@ -27,38 +45,15 @@ var authenticate = function (socket, data, callback) {
                 return callback(new Error("Only one connection for each account is allowed"));
             }
 
-
-
-
-        // var dbPassword = user.get("password");
-        // console.log("dbPassword : " + dbPassword);
-
-        // if (dbPassword != md5Password) {
-        // res.end();
-        // return;
-        // } else {
-        // // save user info in session
-        // var session = req.session;
-        // session.user = user.toJSON();
-        // console.log("req.session :" + JSON.stringify(session));
-        // // create data sent back to client
-        // var outUser = {};
-        // outUser.userid = session.user.userid;
-        // outUser.username = session.user.username;
-        // outUser.email = session.user.email;
-        // outUser.fullname = session.user.fullname;
-        // outUser.countersetid = session.user.account.countersetid;
-        // res.end(JSON.stringify(outUser));
-        return callback(null, username == password);
+            setOnline(username);
+            socket.username = username;
+            return callback(null, true);
     });
- 
-//   if (err || !user) {
-//     return callback(new Error("User not found"));
-//   } else {
-    
-//   };
+
 }
 
 module.exports = {
    authenticate: authenticate,
+   setOffline: setOffline,
+   resetOnlinestatus: resetOnlinestatus,
 };
