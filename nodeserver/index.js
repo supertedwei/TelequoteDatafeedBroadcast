@@ -1,5 +1,6 @@
 
 var config = require('./config');
+var auth = require('./auth');
 
 // Push Server
 var pushServer = require('http').createServer();
@@ -12,22 +13,11 @@ io.on('connection', function(client){
 });
 
 require('socketio-auth')(io, {
-    authenticate: authenticate,
+    authenticate: auth.authenticate,
     postAuthenticate: postAuthenticate,
     disconnect: disconnect,
     timeout: 1000
 });
-
-function authenticate(socket, data, callback) {
-    var username = data.username;
-    var password = data.password;
- 
-//   if (err || !user) {
-//     return callback(new Error("User not found"));
-//   } else {
-    return callback(null, username == password);
-//   };
-}
 
 function postAuthenticate(socket, data) {
     // var username = data.username;
@@ -52,7 +42,7 @@ socket.on('connect', function(){
     console.log("on connect");
 });
 socket.on('counter', function(data){
-    console.log("on counter : " + JSON.stringify(data));
+    ////console.log("on counter : " + JSON.stringify(data));
     io.sockets.emit("counter", data);
 });
 socket.on('disconnect', function(){

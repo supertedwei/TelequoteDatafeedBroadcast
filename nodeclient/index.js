@@ -7,6 +7,9 @@ socket.on('connect', function(){
     socket.on('authenticated', function() {
         console.log("authenticated");
     });
+    socket.on('unauthorized', function(data){
+        console.log("unauthorized : " + data.message);
+    });
 });
 socket.on('counter', function(data){
     console.log("on counter : " + JSON.stringify(data));
