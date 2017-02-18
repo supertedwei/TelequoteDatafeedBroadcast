@@ -52,8 +52,17 @@ var authenticate = function (socket, data, callback) {
 
 }
 
+var postAuthenticate = function (socket, data) {
+    // var username = data.username;
+    
+    // db.findUser('User', {username:username}, function(err, user) {
+    //     socket.client.user = user;
+    // });
+}
+
 module.exports = {
    authenticate: authenticate,
    setOffline: setOffline,
    resetOnlinestatus: resetOnlinestatus,
+   postAuthenticate: postAuthenticate,
 };
