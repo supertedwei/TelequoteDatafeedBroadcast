@@ -10,8 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "bookshelf": "^0.10.3",
+    "hashmap": "^2.0.6",
     "knex": "^0.12.7",
     "mysql": "^2.13.0",
+    "node-schedule": "^1.2.0",
     "socket.io": "^1.7.2",
     "socket.io-client": "^1.7.2",
     "socketio-auth": "^0.1.0"
