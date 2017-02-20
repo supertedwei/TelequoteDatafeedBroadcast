@@ -1,5 +1,6 @@
 var auth = require('./auth');
 var config = require('./config');
+var accountQuoteCache = require('./account-quote-cache');
 
 // Push Server
 var pushServer = require('http').createServer();
@@ -36,9 +37,21 @@ var socket = require('socket.io-client')(config.datafeedServer.url);
 socket.on('connect', function(){
     console.log("on connect");
 });
-socket.on('counter', function(data){
+socket.on('counter', function(counter){
     ////console.log("on counter : " + JSON.stringify(data));
-    io.sockets.emit("counter", data);
+    // io.sockets.emit("counter", counter);
+
+    Object.keys(io.sockets.sockets).forEach(id => {
+        // console.log("id : " + id);
+        socket = io.sockets.sockets[id];
+        console.log("socket.username : " + socket.username);
+        key1 = socket.username + "_All"
+        key2 = socket.username + "_" + counter.symbol;
+        if (accountQuoteCache.has(key1) || accountQuoteCache.has(key2)) {
+            socket.emit("counter", counter);
+        }
+    });
+
 });
 socket.on('disconnect', function(){
     console.log("on disconnect");

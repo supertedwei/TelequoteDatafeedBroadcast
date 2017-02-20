@@ -22,6 +22,12 @@ var refreshCache = function() {
     });
 }
 
+var has = function(key) {
+    console.log("key : " + key);
+    return map.has(key);
+}
+
 module.exports = {
    refreshCache: refreshCache,
+   has: has,
 };
