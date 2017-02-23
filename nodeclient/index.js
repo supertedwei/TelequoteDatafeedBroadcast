@@ -32,7 +32,7 @@ socket.on('counter', function(data){
     quote.low = data.low;
     quote.open = data.open;
     quote.prev_close = data.prev_close;
-    quote.time = new Date();//data.time;
+    quote.time = data.time;
     console.log("quote : " + JSON.stringify(quote));
 
     new Model.Quote({symbol: quote.symbol}).save(quote, {patch: true}).then(function(model) {
