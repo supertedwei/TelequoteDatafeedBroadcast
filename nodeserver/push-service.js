@@ -38,9 +38,10 @@ socket.on('connect', function(){
     console.log("on connect");
 });
 socket.on('counter', function(counter){
-    ////console.log("on counter : " + JSON.stringify(data));
+    counter.time = new Date
+    console.log("on counter : " + JSON.stringify(counter));
     // io.sockets.emit("counter", counter);
-
+   
     Object.keys(io.sockets.sockets).forEach(id => {
         // console.log("id : " + id);
         socket = io.sockets.sockets[id];
