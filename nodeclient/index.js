@@ -81,6 +81,7 @@ socket.on('disconnect', function(){
 
 function pruneQuoteLog() {
     console.log("pruneQuoteLog");
+    iteration = 0;
     var query = "DELETE FROM quotelog WHERE timestamp < (UNIX_TIMESTAMP(NOW()-INTERVAL ? MINUTE))";
     realtimeDB.knex.raw(query, [pruneduration]).then(function (response) {
         console.log("[pruneQuoteLog] response : " +  JSON.stringify(response));
