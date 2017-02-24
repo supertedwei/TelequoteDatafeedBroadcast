@@ -21,6 +21,12 @@ var Quote = realtimeDB.Model.extend({
     idAttribute: 'symbol',
 });
 
+var QuoteLog = realtimeDB.Model.extend({
+    tableName: 'quotelog',
+    idAttribute: 'priceid',
+});
+
 module.exports = {
    Quote: Quote,
+   QuoteLog: QuoteLog,
 };
