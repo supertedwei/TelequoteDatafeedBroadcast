@@ -6,6 +6,8 @@ var iteration = 0; // Flag for pruning
 var limit = 1000; // Prune every XXX iteration
 var pruneduration = 5; // minutes
 
+var pushService = require('./push-service');
+
 var socket = require('socket.io-client')(config.pushServer.url);
 socket.on('connect', function(){
     console.log("on connect");
@@ -40,6 +42,7 @@ socket.on('counter', function(data){
     quote.time = data.time;
     // console.log("quote : " + JSON.stringify(quote));
 
+    pushService.io.sockets.emit("quote", quote);
     new Model.Quote({symbol: quote.symbol}).save(quote, {patch: true}).then(function(model) {
         // console.log("model : " + JSON.stringify(model));
     }).catch(error => {
