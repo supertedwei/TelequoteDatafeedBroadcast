@@ -1,6 +1,8 @@
 var config = require('./config');
 var firebase = require("firebase");
 
+var cache = {};
+
 firebase.initializeApp({
     serviceAccount: "firebase-admin.json",
     databaseURL: config.firebase.databaseURL
@@ -11,7 +13,8 @@ socket.on('connect', function(){
     socket.on('quote', function(quote) {
         console.log("quote - " + JSON.stringify(quote));
         var quoteRef = firebase.database().ref("quote");
-        var quoteChildRef = quoteRef.child(quote.symbol);
+        var encodedSymbol = encode(quote.symbol);
+        var quoteChildRef = quoteRef.child(encodedSymbol);
         quoteChildRef.set(quote);
     });
     socket.on('disconnect', function(){
@@ -19,3 +22,16 @@ socket.on('connect', function(){
     });
     
 });
+
+var encode = function(input) {
+    var output = cache[input];
+    if (output == null) {
+        output = input.replace(".", "_");
+        output = output.replace("#", "_");
+        output = output.replace("$", "_");
+        output = output.replace("[", "_");
+        output = output.replace("]", "_");
+        cache[input] = output;
+    }
+    return output;
+}
