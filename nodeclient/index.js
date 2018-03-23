@@ -1,3 +1,7 @@
+require('console-stamp')(console, '[HH:MM:ss.l]');
+
+console.log("Starting NodeClient ...")
+
 var config = require('./config');
 var Model = require('./model');
 var realtimeDB = require('./db').realtimeDB;
