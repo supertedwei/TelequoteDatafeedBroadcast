@@ -32,6 +32,7 @@ public class PushServer {
     }
 
     public void push(PushCounter counter) {
+        System.out.println(new java.util.Date().toString() + " pushing counter : " + counter.toString());
         server.getBroadcastOperations().sendEvent("counter", counter);
     }
 

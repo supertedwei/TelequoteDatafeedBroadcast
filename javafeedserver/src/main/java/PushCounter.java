@@ -78,4 +78,22 @@ public class PushCounter {
     public Boolean getHasupdate() {
         return hasupdate;
     }
+
+    @Override
+    public String toString() {
+        return "PushCounter{" +
+                "counterid='" + counterid + '\'' +
+                ", symbol='" + symbol + '\'' +
+                ", bid='" + bid + '\'' +
+                ", ask='" + ask + '\'' +
+                ", last='" + last + '\'' +
+                ", change='" + change + '\'' +
+                ", high='" + high + '\'' +
+                ", low='" + low + '\'' +
+                ", prev_close='" + prev_close + '\'' +
+                ", open='" + open + '\'' +
+                ", time='" + time + '\'' +
+                ", hasupdate=" + hasupdate +
+                '}';
+    }
 }
