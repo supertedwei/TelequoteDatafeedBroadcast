@@ -1,13 +1,14 @@
-import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.Configuration;
-import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
-import com.corundumstudio.socketio.listener.DataListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by Administrator on 15/2/2017.
  */
 public class PushServer {
+
+    Logger log = LoggerFactory.getLogger(PushServer.class);
 
     private int port;
     private SocketIOServer server;
@@ -32,7 +33,7 @@ public class PushServer {
     }
 
     public void push(PushCounter counter) {
-        System.out.println(new java.util.Date().toString() + " pushing counter : " + counter.toString());
+        log.debug("Pushing counter : " + counter.toString());
         server.getBroadcastOperations().sendEvent("counter", counter);
     }
 

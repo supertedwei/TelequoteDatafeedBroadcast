@@ -3,6 +3,9 @@
  * and open the template in the editor.
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.net.*;
 
@@ -11,6 +14,9 @@ import java.net.*;
  * @author Alvin Koh
  */
 public class DatafeedThread implements Runnable {
+
+    Logger log = LoggerFactory.getLogger(DatafeedThread.class);
+
     private Socket client;
     private CounterList counterlist;
     private PushServer pushServer;
@@ -32,6 +38,7 @@ public class DatafeedThread implements Runnable {
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             while ((line = in.readLine()) != null)
             {
+                log.debug("Counter received : " + line);
                 Counter counter = this.counterlist.parse(line);
                 if (counter != null) {
                     this.pushServer.push(new PushCounter(counter));
