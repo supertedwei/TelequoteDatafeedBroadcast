@@ -1,12 +1,15 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Alvin Koh
  */
 public class Database {
+
+    Logger log = LoggerFactory.getLogger(Database.class);
     
     String host = "localhost";
     String port = "3306";
@@ -46,11 +49,11 @@ public class Database {
             if (!this.isBusy()) {
                 try {
                     setBusyTimestamp();
-                    System.out.println("\n[INFO] Connecting to "+this.host+":"+this.port);
-                    System.out.println("==================================================");                 
+                    log.info("Connecting to "+this.host+":"+this.port);
+                    log.info("==================================================");
                     connection = DriverManager.getConnection(this.connectionURL, this.user, this.password);            
                 } catch (SQLException ex) {
-                    System.err.println("[ERROR] Database communication error");
+                    log.error("Database communication error");
                 }     
                 return this.connection;
                 
