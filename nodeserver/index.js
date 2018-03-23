@@ -1,4 +1,7 @@
+require('console-stamp')(console, '[HH:MM:ss.l]');
 var schedule = require('node-schedule');
+
+console.log("Starting NodeServer ...")
 
 var accountQuoteCache = require('./account-quote-cache');
 accountQuoteCache.refreshCache();
