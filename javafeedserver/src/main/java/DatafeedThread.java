@@ -38,7 +38,7 @@ public class DatafeedThread implements Runnable {
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             while ((line = in.readLine()) != null)
             {
-                log.debug("Counter received : " + line);
+//                log.debug("Counter received : " + line);
                 this.counterlist.parse(line, pushServer);
             }
             in.close();
