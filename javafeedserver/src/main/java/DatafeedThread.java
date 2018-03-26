@@ -39,10 +39,7 @@ public class DatafeedThread implements Runnable {
             while ((line = in.readLine()) != null)
             {
                 log.debug("Counter received : " + line);
-                Counter counter = this.counterlist.parse(line);
-                if (counter != null) {
-                    this.pushServer.push(new PushCounter(counter));
-                }
+                this.counterlist.parse(line, pushServer);
             }
             in.close();
         } catch (IOException ex) {

@@ -37,7 +37,7 @@ public class CounterList {
     }    
     
     //--------------------------------------------------------------------------
-    protected Counter parse(String line) {
+    protected void parse(String line, PushServer pushServer) {
       Pattern p = Pattern.compile("^(\\S{1}) (\\S*)\\s*(\\d{3}) (\\S*)$");
       Matcher m = p.matcher(line);
       if (m.matches()) {
@@ -55,13 +55,12 @@ public class CounterList {
                 Counter counter = counters.get(counterid);
                  if(counter.update(datatype, value)) {
                      updatePrice(counterid);
-                     return counter;
+                     pushServer.push(new PushCounter(counter));
                  }
             }
       } else if (line.length() > 0) {
         System.out.println("\n[NOTICE]: Invalid input - " + line);
       }
-      return null;
     }
     
     //--------------------------------------------------------------------------
